@@ -7,6 +7,7 @@ type Post = {
   id: number;
   title: string;
   author: number;
+  category: number;
   excerpt: string;
   content: string;
 }
@@ -53,8 +54,8 @@ export default function Home({ posts }:PostsProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await api.get('api')
-  const posts = res.data
-  console.log(res.data)
+  const posts: Post = res.data
+  console.log(posts)
 
   return {
     props: {

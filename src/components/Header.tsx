@@ -30,7 +30,7 @@ export function Header() {
                     fontSize="medium"
                     colorScheme="yellow"
                     mr="5"
-                    href="#" 
+                    href="/register" 
                 >
                     Sign Up
                 </Button>

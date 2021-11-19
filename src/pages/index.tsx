@@ -1,7 +1,8 @@
 import { Header } from "../components/Header";
-import { Flex, Box, Container, Heading, Text, Link } from "@chakra-ui/react"
+import { Flex, Box, Container, Heading, Text, Link as Lin } from "@chakra-ui/react"
 import { api } from "../services/api";
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 
 type Post = {
   id: number;
@@ -34,8 +35,10 @@ export default function Home({ posts }:PostsProps) {
             justifyContent="center"
             marginTop="6">
             <Heading marginTop="1">
-              <Link _hover={{ textDecoration: 'none' }}>
-                {post.title}
+              <Link key={post.id} href={`/posts/${post.id}`}>
+                <Lin _hover={{ textDecoration: 'none' }}              >
+                  {post.title}
+                </Lin>
               </Link>
             </Heading>
             <Text
@@ -52,10 +55,11 @@ export default function Home({ posts }:PostsProps) {
   )
 }
 
+
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await api.get('api')
-  const posts: Post = res.data
-  console.log(posts)
+  const res = await api.get('api/')
+
+  const posts = res.data
 
   return {
     props: {

@@ -1,39 +1,27 @@
 import { Flex, Box, FormLabel, Input, Stack, Button, Heading, FormControl } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { FormEvent } from 'react';
 import { Header } from '../../components/Header';
-import { api } from '../../services/api';
 import { useRouter } from 'next/router';
-  
-interface CreateUser {
-    user_name: string;
-    email: string;
-    password: string;
-}
+import { AuthContext } from '../../contexts/AuthContext';
+
 
 export default function Register() {
     const router = useRouter()
     const [email, setEmail] = useState('')
-    const [user_name, setUser_Name] = useState('')
     const [password, setPassword] = useState('')
 
-    function handleCreateUser(event: FormEvent) {
+    const { signIn } = useContext(AuthContext)
+
+    async function handleLogin(event: FormEvent) {
         event.preventDefault()
-        const newUser: CreateUser = {
+        const data = {
             email: email,
-            user_name: user_name,
             password: password 
         }
-        api.post('api/user/create/', {  email: newUser.email,
-                                    user_name: newUser.user_name,
-                                    password: newUser.password 
-                                 }
-                
-        ).then((res) => {
-            console.log(res.data)
-            router.push('/login')
-        })
-        
+
+        await signIn(data)
+        router.push('/dashboard')
     }   
     
     return (
@@ -61,15 +49,6 @@ export default function Register() {
                             onChange={(e) => setEmail(e.target.value)}
                         /> 
                         </FormControl>
-                        <FormControl id="user_name">
-                            <FormLabel>Username</FormLabel>
-                            <Input 
-                            type="user_name" 
-                            focusBorderColor="gray.500"
-                            value={user_name}
-                            onChange={(e) => setUser_Name(e.target.value)}
-                            /> 
-                        </FormControl>
                         <FormControl id="password">
                             <FormLabel>Password</FormLabel>
                             <Input 
@@ -80,7 +59,7 @@ export default function Register() {
                             /> 
                         </FormControl>
                         <Button
-                            onClick={handleCreateUser}
+                            onClick={handleLogin}
                             type="submit"
                             bg={'yellow.400'}
                             color="gray.800"

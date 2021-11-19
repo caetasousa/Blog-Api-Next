@@ -13,7 +13,7 @@ export function Header() {
         >
             <Text 
                 as="a" 
-                href="#" 
+                href="/" 
                 fontSize="2xl" 
                 fontWeight="bold" 
                 w="64"
@@ -36,11 +36,22 @@ export function Header() {
                 </Button>
                 
                 <Button 
+                    as="a"
+                    mr="5"
                     colorScheme="yellow"
                     fontSize="medium"
-                    href="#"
+                    href="/login"
                 >
                     Log in
+                </Button>
+
+                <Button 
+                    as="a"
+                    colorScheme="yellow"
+                    fontSize="medium"
+                    href="/logout"
+                >
+                    Log out
                 </Button>
             </Box>
         </Flex>
